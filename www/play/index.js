@@ -1,1 +1,0 @@
-ospokemon.load.Script("/play/websocket.js")
