@@ -2,6 +2,12 @@ ospokemon = {}
 
 ospokemon.player = {}
 
+ospokemon.player.Refresh = function() {
+	$.getJSON('/api/player', function(data) {
+		ospokemon.player.data = data
+	})
+}
+
 ospokemon.load = {}
 
 ospokemon.load.Script = function(path, cb) {
@@ -27,7 +33,10 @@ ospokemon.event.Fire = function() {
 	var args = Array.prototype.slice.call(arguments)
 	var event = args.shift()
 
-	if (!ospokemon.event[event]) return
+	if (!ospokemon.event[event]) {
+		console.log("no event handlers for event: "+event)
+		return
+	}
 
 	for (var i = 0; i < ospokemon.event[event].length; i++) {
 		var f = ospokemon.event[event][i]
@@ -39,3 +48,4 @@ ospokemon.event.Fire = function() {
 }
 
 ospokemon.load.Script("websocket.js")
+ospokemon.load.Script("cmd/load.js")
