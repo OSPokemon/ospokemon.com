@@ -2,19 +2,10 @@ ospokemon = {}
 
 ospokemon.player = {}
 
-ospokemon.player.Refresh = function() {
+ospokemon.player.Update = function() {
 	$.getJSON('/api/player', function(data) {
-		ospokemon.player.data = data
+		ospokemon.event.Fire("Player.Update", data)
 	})
-}
-
-ospokemon.load = {}
-
-ospokemon.load.Script = function(path, cb) {
-  return $.get(path).done(cb)
-  .fail(function() {
-    console.log(arguments)
-  })
 }
 
 ospokemon.event = {}
@@ -34,7 +25,7 @@ ospokemon.event.Fire = function() {
 	var event = args.shift()
 
 	if (!ospokemon.event[event]) {
-		console.log("no event handlers for event: "+event)
+		console.log('no handlers for event: '+event)
 		return
 	}
 
@@ -42,10 +33,29 @@ ospokemon.event.Fire = function() {
 		var f = ospokemon.event[event][i]
 
 		if (f) {
-			f.apply(null, args)
+			setTimeout(function() {
+				f.apply(null, args)
+			}, 0)
 		}
 	}
 }
 
-ospokemon.load.Script("websocket.js")
-ospokemon.load.Script("cmd/load.js")
+ospokemon.websocket = new WebSocket('ws://' + window.location.host + '/api/websocket')
+
+ospokemon.websocket.onmessage = function (e) {
+	ospokemon.event.Fire("Websocket.Message", JSON.parse(e.data))
+}
+
+ospokemon.websocket.onclose = function(e) {
+	ospokemon.event.Fire("Websocket.Close")
+}
+
+ospokemon.websocket.Send = function(cmd) {
+	ospokemon.websocket.send(JSON.stringify({
+		"Username": ospokemon.player.data.username,
+		"Message": cmd
+	}))
+}
+
+$.get('menu.js')
+$.get('cmd/load.js')

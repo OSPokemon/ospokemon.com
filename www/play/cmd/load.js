@@ -1,3 +1,4 @@
-ospokemon.load.Script("cmd/universe.update.js")
-ospokemon.load.Script("cmd/websocket.close.js")
-ospokemon.load.Script("cmd/websocket.message.js")
+$.get("cmd/player.update.js")
+$.get("cmd/universe.update.js")
+$.get("cmd/websocket.close.js")
+$.get("cmd/websocket.message.js")
