@@ -1,9 +1,53 @@
 <html>
 	<head>
 		<title>OSPokemon</title>
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="index.css" rel="stylesheet">
 		<script src="/js/jquery-3.1.0.min.js"></script>
+		<script src="/js/jquery-ui.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 		<script src="play.js"></script>
 	</head>
-	<body oncontextmenu="return false;" onload="(function(){ospokemon.player.Refresh()})()">
+	<body oncontextmenu="return false;">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<ul class="nav navbar-nav">
+				<li>
+					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">
+						OSPokemon
+					</a>
+					<ul class="dropdown-menu">
+						<li onclick="ospokemon.player.Update()"><a><span class="glyphicon glyphicon-refresh"></span>Update</a></li>
+						<li onclick="ospokemon.menu.Player()"><a><span class="glyphicon glyphicon-sunglasses"></span>Player</a></li>
+						<li onclick="ospokemon.menu.Actions()"><a><span class="glyphicon glyphicon-new-window"></span>Actions</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Nav header</li>
+						<li><a><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+					</ul>
+				</li>
+			</ul>
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+					<li><a href="/api/logout">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="playermenu panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Player</h3>
+				<h3 class="panel-title navbar-right"><a><span class="glyphicon glyphicon-ok-circle" onclick="$('.playermenu').hide()"></span></a></h3>
+			</div>
+			<div class="panel-body">
+			</div>
+		</div>
+		<div class="actionsmenu panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Actions</h3>
+				<h3 class="panel-title navbar-right"><a><span class="glyphicon glyphicon-ok-circle" onclick="$('.actionsmenu').hide()"></span></a></h3>
+			</div>
+			<div class="panel-body">
+			</div>
+		</div>
+		<div class="actionbar">
+		</div>
 	</body>
 </html>
