@@ -42,12 +42,20 @@
 		<div class="actionsmenu panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title">Actions</h3>
-				<h3 class="panel-title navbar-right"><a><span class="glyphicon glyphicon-ok-circle" onclick="$('.actionsmenu').hide()"></span></a></h3>
+				<h3 class="panel-title navbar-right"><a><span class="glyphicon glyphicon-ok-circle" onclick="ospokemon.menu.Actions()"></span></a></h3>
 			</div>
 			<div class="panel-body">
 			</div>
 		</div>
-		<div class="actionbar">
+		<div id="bindingsmenu">
+			<div class="">
+				<span class="">ATTACH KEY</span>
+			</div>
+			<form class="well form-horizontal" action="javascript:;" method="" onsubmit="ospokemon.menu.BindingsMenu(this);">
+				<input id="bindingsmenu-key" type="text" class="form-control" name="email">
+				<button type="reset" class="btn btn-default">Reset</button>
+				<button type="submit" class="btn btn-primary">Save</button>
+			</form>
 		</div>
 	</body>
 </html>

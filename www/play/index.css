@@ -1,3 +1,9 @@
+.body {
+	max-height: 100%;
+	max-width: 100%;
+	user-select: none;
+}
+
 .navbar-right {
 	padding-right: 15px;
 }
@@ -6,6 +12,7 @@
 	position: relative;
 	top: 100px;
 	left: 100px;
+	min-width: 25%;
 	max-width: 50%;
 	display: none;
 }
@@ -24,6 +31,7 @@
 	position: relative;
 	top: 100px;
 	left: 100px;
+	min-width: 25%;
 	max-width: 50%;
 	display: none;
 }
@@ -31,7 +39,69 @@
 	display: inline;
 }
 
-.ui-resizable { position: relative;}
+.bindingsbar {
+	position: absolute;
+	bottom: 0px;
+	height: 48px;
+	opacity: 0.6;
+}
+
+.bindingsbar:hover {
+	opacity: 0.7;
+}
+
+.bindingbutton {
+	display: inline-block;
+	opacity: 1.0;
+	font-size: 24px;
+	font-weight: bold;
+	vertical-align: top;
+	position: relative;
+}
+.bindingbutton.empty {
+	display: none;
+}
+.edit .bindingbutton {
+	display: inline-block;
+}
+.bindingbutton .key {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: inline-block;
+	z-index: 1;
+}
+.bindingbutton img {
+	position: relative;
+	top: 0px;
+	display: inline-block;
+	left: 0px;
+	height: 48px;
+	width: 48px;
+	background-color: transparent;
+}
+.bindingbutton.empty img {
+	 background-color: black; 
+}
+
+#bindingsmenu {
+	position: absolute;
+	bottom: 24px;
+	left: 24px;
+	display: none;
+	width: 200px;
+	height: 140px;
+	background-color: green;
+	border-radius: 24px 24px 24px 0px;
+	padding: 10px;
+}
+
+#bindingsmenu form {
+	background-color: transparent;
+	padding: 0px;
+}
+
+.ui-resizable { position: absolute;}
 .ui-resizable-handle { position: absolute;font-size: 0.1px; display: block; }
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
 .ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }

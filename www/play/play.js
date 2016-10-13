@@ -1,10 +1,72 @@
 ospokemon = {}
 
+ospokemon.elements = {}
+
+ospokemon.LoadElement = function(name) {
+	var element = ospokemon.elements[name]
+	if (element) {
+		return new Promise(function(resolve, reject) {
+			resolve(element)
+		})
+	} else {
+		ospokemon.elements[name] = {
+			name: name,
+			html: false,
+			script: false,
+			build: function(data) {
+				var el = ospokemon.elements[name]
+				var html = $(el.html)[0]
+				$.each(el.script, function(key, val) {
+					html[key] = val
+				})
+				return html.constructor(data)
+			}
+		}
+
+		return new Promise(function(resolve, reject) {
+			$.get(name+'.html')
+			.done(function(data) {
+				ospokemon.elements[name].html = data
+			})
+			.fail(function(err) {
+				console.error(err)
+			})
+			.always(function() {
+				$.get(name+'.js')
+				.done(function(data) {
+					ospokemon.elements[name].script = eval(data)
+				})
+				.fail(function(err) {
+					console.log(err)
+				})
+				.always(function() {
+					resolve(ospokemon.elements[name])
+				})
+			})
+		})
+	}
+}
+
+ospokemon.SaveElement = function(config) {
+	return config
+}
+
+ospokemon.BuildElement = function(name) {
+	return new Promise(function(resolve, reject) {
+		ospokemon.LoadElement(name).then(function(el) {
+			resolve(el.build())
+		})
+	})
+}
+
 ospokemon.player = {}
 
 ospokemon.player.Update = function() {
 	$.getJSON('/api/player', function(data) {
-		ospokemon.event.Fire("Player.Update", data)
+		ospokemon.player.data = data
+		ospokemon.event.Fire('Player.Update')
+
+		ospokemon.menu.Actions.Update()
 	})
 }
 
@@ -33,9 +95,7 @@ ospokemon.event.Fire = function() {
 		var f = ospokemon.event[event][i]
 
 		if (f) {
-			setTimeout(function() {
-				f.apply(null, args)
-			}, 0)
+			f.apply(null, args)
 		}
 	}
 }
@@ -43,19 +103,25 @@ ospokemon.event.Fire = function() {
 ospokemon.websocket = new WebSocket('ws://' + window.location.host + '/api/websocket')
 
 ospokemon.websocket.onmessage = function (e) {
-	ospokemon.event.Fire("Websocket.Message", JSON.parse(e.data))
+	var data = JSON.parse(e.data, e.data)
 }
 
 ospokemon.websocket.onclose = function(e) {
 	ospokemon.event.Fire("Websocket.Close")
 }
 
-ospokemon.websocket.Send = function(cmd) {
+ospokemon.websocket.Send = function(event, cmd) {
 	ospokemon.websocket.send(JSON.stringify({
 		"Username": ospokemon.player.data.username,
-		"Message": cmd
+		"Event": event,
+		"Message": JSON.stringify(cmd)
 	}))
 }
 
 $.get('menu.js')
+
+ospokemon.BuildElement('menu/bindings').then(function(el) {
+	$('body').append(el)
+})
+
 $.get('cmd/load.js')
