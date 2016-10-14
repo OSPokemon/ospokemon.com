@@ -65,8 +65,6 @@ ospokemon.player.Update = function() {
 	$.getJSON('/api/player', function(data) {
 		ospokemon.player.data = data
 		ospokemon.event.Fire('Player.Update')
-
-		ospokemon.menu.Actions.Update()
 	})
 }
 
@@ -121,6 +119,9 @@ ospokemon.websocket.Send = function(event, cmd) {
 $.get('menu.js')
 
 ospokemon.BuildElement('menu/bindings').then(function(el) {
+	$('body').append(el)
+})
+ospokemon.BuildElement('menu/actions').then(function(el) {
 	$('body').append(el)
 })
 

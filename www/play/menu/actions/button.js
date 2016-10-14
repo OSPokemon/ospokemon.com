@@ -1,0 +1,13 @@
+ospokemon.SaveElement({
+	constructor: function(data) {
+		this.data = data
+		$(this).draggable({ revert: "invalid" })
+		return this
+	},
+	refresh: function() {
+		console.log('hi there')
+		$('span', this).text(this.data.spellid)
+		$('img', this).attr("src", this.data.image)
+		return this
+	}
+})

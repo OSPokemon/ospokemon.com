@@ -20,13 +20,6 @@
 	display: inline;
 }
 
-.actionbutton {
-	border: 1px solid black;
-}
-.actionbutton:hover {
-	border: 1px solid black;
-}
-
 .playermenu {
 	position: relative;
 	top: 100px;
@@ -43,11 +36,11 @@
 	position: absolute;
 	bottom: 0px;
 	height: 48px;
-	opacity: 0.6;
+	opacity: 0.5;
 }
 
 .bindingsbar:hover {
-	opacity: 0.7;
+	opacity: 1.0;
 }
 
 .bindingbutton {
@@ -68,13 +61,13 @@
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	display: inline-block;
+	/* display: inline-block; */
 	z-index: 1;
 }
 .bindingbutton img {
-	position: relative;
+	/* position: relative; */
 	top: 0px;
-	display: inline-block;
+	/* display: inline-block; */
 	left: 0px;
 	height: 48px;
 	width: 48px;
@@ -84,21 +77,16 @@
 	 background-color: black; 
 }
 
-#bindingsmenu {
-	position: absolute;
-	bottom: 24px;
-	left: 24px;
-	display: none;
-	width: 200px;
-	height: 140px;
-	background-color: green;
-	border-radius: 24px 24px 24px 0px;
-	padding: 10px;
+.actionbutton {
+  position: relative;
+  display: inline-block;
 }
-
-#bindingsmenu form {
-	background-color: transparent;
-	padding: 0px;
+.actionbutton span {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	 /*display: inline-block; */
+	z-index: 1;
 }
 
 .ui-resizable { position: absolute;}

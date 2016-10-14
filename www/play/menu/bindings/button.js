@@ -1,7 +1,5 @@
 ospokemon.SaveElement({
 	constructor: function(data) {
-
-
 		$(this).droppable({
 			accept: ".actionbutton",
 			classes: {
