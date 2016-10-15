@@ -35,5 +35,13 @@ ospokemon.SaveElement({
 			}
 		})
 		return this
+	},
+	fire: function(key) {
+		if ($(this.buttons[key]).hasClass('empty')) {
+			console.log('empty')
+			return
+		}
+
+		this.buttons[key].fire()
 	}
 })

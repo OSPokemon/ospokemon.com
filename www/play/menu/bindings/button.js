@@ -30,5 +30,10 @@ ospokemon.SaveElement({
 			$(this).removeClass('empty')
 			$('img', this).attr("src", this.data.image)
 		}
+	},
+	fire: function() {
+		ospokemon.websocket.Send('Binding.Cast', {
+			'key': this.data.key+''
+		})
 	}
 })
