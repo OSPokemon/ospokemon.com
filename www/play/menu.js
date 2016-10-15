@@ -1,25 +1,32 @@
-ospokemon.menu = {}
+ospokemon.SaveElement({
+	constructor: function() {
+		ospokemon.menu = this
 
-ospokemon.menu.template = {}
+		ospokemon.BuildElement('menu/bindings').then(function(el) {
+			$('body').append(el)
+		})
+		ospokemon.BuildElement('menu/actions').then(function(el) {
+			$('body').append(el)
+		})
 
-ospokemon.menu.Actions = function() {
-	if (!$('.actionsmenu').is(':hidden')) {
-		$('.actionsmenu').hide()
-		$('#bindings').removeClass('edit')
-		return
+		ospokemon.BuildElement('camera').then(function(el) {
+			$('body').append(el)
+
+			ospokemon.LoadElementScript('keyboard').then(function(el) {
+				ospokemon.keyboard = el.script.constructor()
+			})
+		})
+
+		return this
+	},
+	actions: function() {
+	},
+	player: function() {
+		if (!$('.playermenu').is(':hidden')) {
+			$('.playermenu').hide()
+			return
+		}
+
+		$('.playermenu').show()
 	}
-
-	$('.actionsmenu').show()
-	$('#bindings').addClass('edit')
-}
-
-$('.playermenu').draggable().resizable()
-
-ospokemon.menu.Player = function() {
-	if (!$('.playermenu').is(':hidden')) {
-		$('.playermenu').hide()
-		return
-	}
-
-	$('.playermenu').show()
-}
+})

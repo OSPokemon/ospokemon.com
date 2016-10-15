@@ -7,6 +7,16 @@ ospokemon.SaveElement({
 
 		return this
 	},
+	toggle: function() {
+		if (!$(ospokemon.menu.actions).is(':hidden')) {
+			$(ospokemon.menu.actions).hide()
+			$('#bindings').removeClass('edit')
+			return
+		}
+
+		$(ospokemon.menu.actions).show()
+		$('#bindings').addClass('edit')
+	},
 	refresh: function() {
 		var actionsmenu = $('.panel-body', ospokemon.menu.actions)
 		actionsmenu.empty()

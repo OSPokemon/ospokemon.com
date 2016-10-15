@@ -9,42 +9,63 @@ ospokemon.LoadElement = function(name) {
 			resolve(element)
 		})
 	} else {
-		ospokemon.elements[name] = {
-			name: name,
-			html: false,
-			script: false,
-			build: function(data) {
-				var el = ospokemon.elements[name]
-				var html = $(el.html)[0]
-				$.each(el.script, function(key, val) {
-					html[key] = val
-				})
-				return html.constructor(data)
-			}
-		}
-
+		ospokemon.InitElement(name)
 		return new Promise(function(resolve, reject) {
-			$.get(name+'.html')
-			.done(function(data) {
-				ospokemon.elements[name].html = data
-			})
-			.fail(function(err) {
-				console.error(err)
-			})
-			.always(function() {
-				$.get(name+'.js')
-				.done(function(data) {
-					ospokemon.elements[name].script = eval(data)
-				})
-				.fail(function(err) {
-					console.log(err)
-				})
-				.always(function() {
-					resolve(ospokemon.elements[name])
+			ospokemon.LoadElementHtml(name).then(function(el) {
+				ospokemon.LoadElementScript(name).then(function(el) {
+					resolve(el)
 				})
 			})
 		})
 	}
+}
+
+ospokemon.InitElement = function(name) {
+	if (ospokemon.elements[name]) {
+		return
+	}
+
+	ospokemon.elements[name] = {
+		name: name,
+		html: false,
+		script: false,
+		build: function(data) {
+			var el = ospokemon.elements[name]
+			var html = $(el.html)[0]
+			$.each(el.script, function(key, val) {
+				html[key] = val
+			})
+			return html.constructor(data)
+		}
+	}
+}
+
+ospokemon.LoadElementHtml = function(name) {
+	ospokemon.InitElement(name)
+
+	return new Promise(function(resolve, reject) {
+		$.get(name+'.html')
+		.done(function(data) {
+			ospokemon.elements[name].html = data
+		})
+		.always(function() {
+			resolve(ospokemon.elements[name])
+		})
+	})
+}
+
+ospokemon.LoadElementScript = function(name) {
+	ospokemon.InitElement(name)
+
+	return new Promise(function(resolve, reject) {
+		$.get(name+'.js')
+		.done(function(data) {
+			ospokemon.elements[name].script = eval(data)
+		})
+		.always(function() {
+			resolve(ospokemon.elements[name])
+		})
+	})
 }
 
 ospokemon.SaveElement = function(config) {
@@ -116,12 +137,7 @@ ospokemon.websocket.Send = function(event, cmd) {
 	}))
 }
 
-$.get('menu.js')
-
-ospokemon.BuildElement('menu/bindings').then(function(el) {
-	$('body').append(el)
-})
-ospokemon.BuildElement('menu/actions').then(function(el) {
+ospokemon.BuildElement('menu').then(function(el) {
 	$('body').append(el)
 })
 
