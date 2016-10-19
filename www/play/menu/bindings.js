@@ -1,7 +1,5 @@
 ospokemon.SaveElement({
 	constructor: function(data) {
-		ospokemon.menu.bindings = this
-
 		ospokemon.event.On('Key.Up', this.fire)
 		ospokemon.event.On('Player.Update', this.refresh)
 

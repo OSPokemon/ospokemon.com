@@ -1,6 +1,5 @@
 ospokemon.SaveElement({
 	constructor: function(data) {
-		ospokemon.menu.actions = this
 		$(this).draggable().resizable()
 
 		ospokemon.event.On('Player.Update', this.refresh)
